@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vite App</title>
+    </head>
+    <body>
+        <h1 id="app"></h1>
+    </body>
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+    <script type="module">
+        import {createApp, h} from 'vue'
+        import '/src/main.js'
+        import Lex from '/index.ts'
+        import classes from '/src/styles/main.module.css'
+        const component = {
+            data(){
+                return {
+                    name: 'vite',
+                    code: '',
+                    result: null
+                }
+            },
+            methods:{
+                handleChange(e) {
+                    this.code = e.target.value
+                },
+                handleClick(){
+                    let code = this.code
+                    if(code == ''){
+                        return
+                    }
+                    try{
+                        this.result = new Lex(code).run().getResult()
+                    }catch(e){
+
+                    }
+                }
+            },
+            render(){
+                let resultList = null
+                if(this.result){
+                    resultList = this.result.map(
+                        ({code, val}, index) => h('li', {key: index}, `T.code=${code}&&T.val=${val}`)
+                    )
+                }
+
+                return h('div', {class: classes.box}, [
+                    h('h2', null, this.name),
+                    h('textArea', {class: classes.input, value: this.code, oninput: this.handleChange}),
+                    h('button', {class: classes.btn, onclick: this.handleClick}, '生成二元式'),
+                    h('ul', {class: classes['result-list']}, resultList)
+                ])
+            }
+        }
+
+        const vm = createApp(component).mount('#app')
+
+    </script>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "learn-ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "serve": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^2.1.3"
+  },
+  "dependencies": {
+    "vue": "^3.0.7"
+  }
+}
